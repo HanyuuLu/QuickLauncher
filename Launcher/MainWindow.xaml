@@ -1,0 +1,22 @@
+﻿<Window x:Class="Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Launcher"
+        mc:Ignorable="d"
+        Title="QuickLauncher" Height="auto" Width="600" WindowStyle="None" AllowsTransparency="True" Background="#05FFFFFF" KeyDown="Window_KeyDown">
+    <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="15,15,15,15" Background="#B2FFFFFF">
+        <Grid Height="auto" FocusManager.FocusedElement="{Binding ElementName=InputBox}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBox x:Name="InputBox" Grid.Row="0" Text="" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" AcceptsReturn="True" AcceptsTab="True" TextChanged="InputBox_TextChanged" />
+            <ListBox Grid.Row="1" FontSize="24" Background="Transparent">
+                <ListBoxItem Content="ListBoxItem"/>
+            </ListBox>
+        </Grid>
+    </Border>
+</Window>
