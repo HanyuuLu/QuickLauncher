@@ -21,18 +21,14 @@ namespace Launcher
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Control ControlObject;
+
         public MainWindow()
         {
+            ControlObject = new Control();
+            MessageBox.Show(ControlObject.test());
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            try
-            {
-                string res = ConfigurationManager.AppSettings["SearchPath"];
-                MessageBox.Show(res, "tag", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message,"", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             InitializeComponent();
         }
 
