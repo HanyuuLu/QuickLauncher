@@ -26,7 +26,6 @@ namespace Launcher
         public MainWindow()
         {
             ControlObject = new Control();
-            MessageBox.Show(ControlObject.test());
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();

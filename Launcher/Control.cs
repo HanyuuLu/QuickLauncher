@@ -55,13 +55,8 @@ namespace Launcher
             }
             catch(Exception e)
             {
-
+                
             }
-        }
-        //TODO:记得删除
-        public string test()
-        {
-            return ConfigurationManager.AppSettings["SearchPath"];
         }
     }
 }

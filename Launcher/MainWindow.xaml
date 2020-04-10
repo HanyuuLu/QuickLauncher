@@ -13,7 +13,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBox x:Name="InputBox" Grid.Row="0" Text="" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" AcceptsReturn="True" AcceptsTab="True" TextChanged="InputBox_TextChanged" />
+            <TextBox x:Name="InputBox" Grid.Row="0" Text="" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" TextChanged="InputBox_TextChanged" />
             <ListBox Grid.Row="1" FontSize="24" Background="Transparent">
                 <ListBoxItem Content="ListBoxItem"/>
             </ListBox>
