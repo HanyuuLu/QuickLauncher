@@ -1,29 +1,48 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Windows;
 
 namespace Launcher
 {
     /// <summary>
     /// 控制器类
+    /// 主要的控制逻辑
     /// </summary>
     class Control
     {
+        //单例
+        public static Control Instance { get; } = new Control();
+        public string Name { get; set; }
         //用户搜索文件夹路径列表
-        private List<string> SearchPathList;
+        public List<string> SearchPathList { get; }
         //搜索到的可启动项
-        private Dictionary<string, string> LaunchList;
-        public Control()
+        public Dictionary<string, string> LaunchList { get; }
+        private const string CONFIG_PATH = "config.json";
+
+        private Control()
         {
             SearchPathList = new List<string>();
             LaunchList = new Dictionary<string, string>();
             //读取用户定义搜索文件列表
-            string res = ConfigurationManager.AppSettings["SearchPath"];
-            SearchPathList = JsonConvert.DeserializeObject<List<string>>(res);
-
+            try
+            {
+                if (!File.Exists(CONFIG_PATH))
+                {
+                    File.Create(CONFIG_PATH);
+                    File.WriteAllText(CONFIG_PATH, JsonSerializer.Serialize(SearchPathList));
+                }
+                else
+                {
+                    SearchPathList = JsonSerializer.Deserialize<List<String>>(File.ReadAllText("config.json"));
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             FlashLaunchList();
         }
         /// <summary>
@@ -48,14 +67,14 @@ namespace Launcher
                 {
                     FileInfo fileInfo = j as FileInfo;
                     if (fileInfo != null)
-                    { LaunchList.Add(fileInfo.Name, fileInfo.FullName); }
+                    { LaunchList.Add(fileInfo.FullName, fileInfo.Name); }
                     else
                     { ListFileInFolder(j.FullName); }
                 }
             }
             catch(Exception e)
             {
-                
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

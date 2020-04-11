@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launcher"
         mc:Ignorable="d"
-        Title="QuickLauncher" Height="auto" Width="600" WindowStyle="None" AllowsTransparency="True" Background="#05FFFFFF" KeyDown="Window_KeyDown">
+        Title="QuickLauncher" Height="auto" Width="600" WindowStyle="None" AllowsTransparency="True" Background="#05FFFFFF" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
     <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="15,15,15,15" Background="#B2FFFFFF">
         <Grid Height="auto" FocusManager.FocusedElement="{Binding ElementName=InputBox}">
 
@@ -13,9 +13,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBox x:Name="InputBox" Grid.Row="0" Text="" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" TextChanged="InputBox_TextChanged" />
-            <ListBox Grid.Row="1" FontSize="24" Background="Transparent">
-                <ListBoxItem Content="ListBoxItem"/>
+            <TextBox x:Name="InputBox" Grid.Row="0" Text="{Binding Path=Name}" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" TextChanged="InputBox_TextChanged" >
+            </TextBox>
+            <ListBox x:Name="ListBox" Grid.Row="1" FontSize="24" Background="Transparent">
+                <ListBoxItem Content="ListBoxItem" Selected="ListBoxItem_Selected"/>
             </ListBox>
         </Grid>
     </Border>

@@ -25,9 +25,8 @@ namespace Launcher
 
         public MainWindow()
         {
-            ControlObject = new Control();
-
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            DataContext = Control.Instance;
             InitializeComponent();
         }
 
@@ -40,13 +39,27 @@ namespace Launcher
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key==Key.Escape)
+             if(e.Key==Key.Escape)
             {
                 Application.Current.Shutdown();
             }
             else if(e.Key==Key.Enter)
             {
                 MessageBox.Show("search!");
+            }
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListBox.Items.Clear();
+            foreach(var (key,value) in Control.Instance.LaunchList)
+            {
+                ListBox.Items.Add(key);
             }
         }
     }
