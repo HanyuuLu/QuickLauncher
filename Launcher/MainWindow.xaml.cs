@@ -59,7 +59,7 @@ namespace Launcher
             ListBox.Items.Clear();
             foreach(var (key,value) in Control.Instance.LaunchList)
             {
-                ListBox.Items.Add(key);
+                ListBox.Items.Add(value);
             }
         }
     }
