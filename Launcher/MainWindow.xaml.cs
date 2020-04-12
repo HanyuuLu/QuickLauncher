@@ -35,6 +35,8 @@ namespace Launcher
         {
             if (InputBox.Text == "exit")
             { Application.Current.Shutdown(); }
+            Control.Instance.search(InputBox.Text);
+            updateList();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -61,6 +63,19 @@ namespace Launcher
             {
                 ListBox.Items.Add(value);
             }
+        }
+        public void updateList()
+        {
+            if(ListBox==null)
+            {
+                return;
+            }
+            ListBox.Items.Clear();
+            foreach (var (key, value) in Control.Instance.SearchList)
+            {
+                ListBox.Items.Add(value);
+            }
+            
         }
     }
 }
