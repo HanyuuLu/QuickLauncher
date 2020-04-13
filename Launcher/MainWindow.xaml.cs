@@ -33,9 +33,7 @@ namespace Launcher
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (InputBox.Text == "exit")
-            { Application.Current.Shutdown(); }
-            Control.Instance.search(InputBox.Text);
+            Control.Instance.search();
             updateList();
         }
 
