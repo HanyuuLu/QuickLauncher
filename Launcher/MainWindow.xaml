@@ -8,21 +8,18 @@
         Title="QuickLauncher" Height="600" Width="1000" WindowStyle="None" AllowsTransparency="True" Background="#05FFFFFF" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
     <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="10,10,10,10" Background="#B2FFFFFF">
         <Grid Height="auto" FocusManager.FocusedElement="{Binding ElementName=InputBox}">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBox x:Name="InputBox" Grid.Row="0" Grid.Column="0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" TextWrapping="NoWrap"  FontSize="36" MaxLines="1" Background="Transparent" BorderBrush="#00ABADB3" TextChanged="InputBox_TextChanged" >
             </TextBox>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <ListBox x:Name="ListBox" FontSize="24" Background="Transparent" VerticalContentAlignment="Top" Grid.Column="0">
-                    <ListBoxItem>a</ListBoxItem>
-                </ListBox>
+                <ListBox x:Name="ListBox" FontSize="24" Background="Transparent" VerticalContentAlignment="Top" Grid.Column="0" ItemsSource="{Binding SearchList, ElementName=ListBox, Mode=OneWay}"/>
                 <Label x:Name="NameLabel" Grid.Column="1" Content="{Binding Name}"/>
             </Grid>
         </Grid>

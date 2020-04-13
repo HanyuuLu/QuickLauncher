@@ -21,7 +21,7 @@ namespace Launcher
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Control ControlObject;
+        //private Control ControlObject;
 
         public MainWindow()
         {
@@ -33,19 +33,24 @@ namespace Launcher
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Control.Instance.search();
+            var task = Task.Run(() => { Control.Instance.search(); });
             updateList();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-             if(e.Key==Key.Escape)
+            switch (e.Key)
             {
-                Application.Current.Shutdown();
-            }
-            else if(e.Key==Key.Enter)
-            {
-                MessageBox.Show("search!");
+                case Key.Escape:
+                    Application.Current.Shutdown();
+                    break;
+                case Key.Enter:
+                    MessageBox.Show("Launch");
+                    break;
+                case Key.Up:
+                case Key.Down:
+                    break;
+
             }
         }
 
@@ -56,24 +61,15 @@ namespace Launcher
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ListBox.Items.Clear();
-            foreach(var (key,value) in Control.Instance.LaunchList)
-            {
-                ListBox.Items.Add(value);
-            }
+            Task.Run(() => Control.Instance.search());
         }
         public void updateList()
         {
-            if(ListBox==null)
-            {
-                return;
-            }
+            if (ListBox == null)
+            {return;}
             ListBox.Items.Clear();
-            foreach (var (key, value) in Control.Instance.SearchList)
-            {
-                ListBox.Items.Add(value);
-            }
-            
+            foreach (var (key, value) in Control.Instance.SearchDict)
+            {ListBox.Items.Add(value);}
         }
     }
 }

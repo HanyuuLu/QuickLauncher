@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -19,16 +20,18 @@ namespace Launcher
         //用户搜索文件夹路径列表
         public List<string> SearchPathList { get; }
         //搜索到的可启动项
-        public Dictionary<string, string> LaunchList { get; }
-        public Dictionary<string, string> SearchList { get; }
+        public Dictionary<string, string> CompleteDict { get; }
+        public Dictionary<string, string> SearchDict { get; }
+        public List<string> SearchList { get; }
         private const string CONFIG_PATH = "config.json";
 
         private Control()
         {
             SearchPathList = new List<string>();
-            SearchList = new Dictionary<string, string>();
-            LaunchList = new Dictionary<string, string>();
-            Name = "Empty";
+            SearchDict = new Dictionary<string, string>();
+            CompleteDict = new Dictionary<string, string>();
+            SearchList = new List<string>();
+            Name = "";
             //读取用户定义搜索文件列表
             try
             {
@@ -38,24 +41,17 @@ namespace Launcher
                     File.WriteAllText(CONFIG_PATH, JsonSerializer.Serialize(SearchPathList));
                 }
                 else
-                {
-                    SearchPathList = JsonSerializer.Deserialize<List<String>>(File.ReadAllText("config.json"));
-                }
+                { SearchPathList = JsonSerializer.Deserialize<List<String>>(File.ReadAllText("config.json")); }
             }
             catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            { MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
             FlashLaunchList();
         }
         /// <summary>
         /// 刷新文件列表
         /// </summary>
         public void FlashLaunchList()
-        {
-            foreach (var i in SearchPathList)
-            { ListFileInFolder(i); }
-        }
+        { foreach (var i in SearchPathList) { ListFileInFolder(i); } }
         /// <summary>
         /// 将当前路径下的文件添加进启动列表
         /// </summary>
@@ -70,28 +66,29 @@ namespace Launcher
                 {
                     FileInfo fileInfo = j as FileInfo;
                     if (fileInfo != null)
-                    { LaunchList.Add(fileInfo.FullName, fileInfo.Name); }
+                    { CompleteDict.Add(fileInfo.FullName, fileInfo.Name); }
                     else
                     { ListFileInFolder(j.FullName); }
                 }
             }
             catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            { MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
-        public async void search(string src=null)
+        public void search(string src = null)
         {
             src = src ?? Name;
+            src = src.TrimStart().TrimEnd();
+            SearchDict.Clear();
             SearchList.Clear();
-            foreach (var (key, value) in LaunchList)
+            if (src != "")
             {
-                if (value.Contains(src))
-                {
-                    SearchList.Add(key, value);
-                }
+                IEnumerable<KeyValuePair<string, string>> res =
+                    from item in this.CompleteDict
+                    where item.Value.Contains(src)
+                    select item;
+                foreach (var (key, value) in res)
+                { SearchDict.Add(key, value); SearchList.Add(value); }
             }
-            
         }
     }
 }
