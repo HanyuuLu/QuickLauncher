@@ -34,7 +34,7 @@ namespace Launcher
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var task = Task.Run(() => { Control.Instance.search(); });
-            updateList();
+            //updateList();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -63,13 +63,13 @@ namespace Launcher
         {
             Task.Run(() => Control.Instance.search());
         }
-        public void updateList()
-        {
-            if (ListBox == null)
-            {return;}
-            ListBox.Items.Clear();
-            foreach (var (key, value) in Control.Instance.SearchDict)
-            {ListBox.Items.Add(value);}
-        }
+        //public void updateList()
+        //{
+        //    if (ListBox == null)
+        //    {return;}
+        //    ListBox.Items.Clear();
+        //    foreach (var (key, value) in Control.Instance.SearchDict)
+        //    {ListBox.Items.Add(value);}
+        //}
     }
 }

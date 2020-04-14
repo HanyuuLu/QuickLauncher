@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Windows;
 
 namespace Launcher
@@ -21,16 +21,13 @@ namespace Launcher
         public List<string> SearchPathList { get; }
         //搜索到的可启动项
         public Dictionary<string, string> CompleteDict { get; }
-        public Dictionary<string, string> SearchDict { get; }
-        public List<string> SearchList { get; }
+        public List<FileInfoItem> SearchList { get; private set; }
         private const string CONFIG_PATH = "config.json";
-
         private Control()
         {
             SearchPathList = new List<string>();
-            SearchDict = new Dictionary<string, string>();
             CompleteDict = new Dictionary<string, string>();
-            SearchList = new List<string>();
+            SearchList = new List<FileInfoItem>();
             Name = "";
             //读取用户定义搜索文件列表
             try
@@ -78,17 +75,37 @@ namespace Launcher
         {
             src = src ?? Name;
             src = src.TrimStart().TrimEnd();
-            SearchDict.Clear();
-            SearchList.Clear();
             if (src != "")
             {
-                IEnumerable<KeyValuePair<string, string>> res =
+                IEnumerable<FileInfoItem> res =
                     from item in this.CompleteDict
                     where item.Value.Contains(src)
-                    select item;
-                foreach (var (key, value) in res)
-                { SearchDict.Add(key, value); SearchList.Add(value); }
+                    select new FileInfoItem(item.Key);
+                SearchList = res.ToList();
+            }else
+            {
+                SearchList.Clear();
             }
+        }
+    }
+    class FileInfoItem
+    {
+        public Bitmap icon { get; }
+        public string FullFileName { get; }
+        public string FileName
+        {
+            get
+            { return Path.GetFileNameWithoutExtension(FullFileName); }
+        }
+        public FileInfoItem(string fullName)
+        {
+            try
+            {
+                FullFileName = fullName;
+                this.icon = Icon.ExtractAssociatedIcon(fullName).ToBitmap();
+            }
+            catch(Exception e)
+            { throw e; }
         }
     }
 }
