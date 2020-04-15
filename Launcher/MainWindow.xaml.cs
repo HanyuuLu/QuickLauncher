@@ -34,7 +34,7 @@ namespace Launcher
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var task = Task.Run(() => { Control.Instance.search(); });
-            //updateList();
+            //updat
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

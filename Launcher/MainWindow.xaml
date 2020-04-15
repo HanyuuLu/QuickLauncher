@@ -27,13 +27,13 @@
                                     <ColumnDefinition Width="48"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                
-                        <Image Height="48" Width="48" Source="{Binding icon}" />
-                                <Label Content="{Binding FileName}" />
+
+                                <Image Grid.Column="0" Height="48" Width="48" Source="{Binding icon}" />
+                                <Label Grid.Column="1" Content="{Binding FileName}" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
- 
+
                 </ListBox>
                 <Label x:Name="NameLabel" Grid.Column="1" Content="{Binding Name}"/>
             </Grid>
