@@ -26,15 +26,20 @@ namespace Launcher
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            DataContext = Control.Instance;
             InitializeComponent();
+            DataContext = Control.Instance;
+            SearchResultList.ItemsSource = Control.Instance.SearchList;
         }
 
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var task = Task.Run(() => { Control.Instance.search(); });
-            //updat
+            var task = Task.Run(() =>
+            {
+                Control.Instance.search();
+            }
+            );
+            SearchResultList.ItemsSource = Control.Instance.SearchList;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

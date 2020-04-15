@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Launcher
 {
@@ -75,7 +79,7 @@ namespace Launcher
         {
             src = src ?? Name;
             src = src.TrimStart().TrimEnd();
-            if (src != "")
+            if (true)
             {
                 IEnumerable<FileInfoItem> res =
                     from item in this.CompleteDict
@@ -87,11 +91,15 @@ namespace Launcher
                 SearchList.Clear();
             }
         }
+        public static void bindRes(Object src)
+        {
+            src = Control.Instance.SearchList;
+        }
     }
     class FileInfoItem
     {
-        public Bitmap icon { get; }
-        public string FullFileName { get; }
+        public ImageSource icon { get; private set; }
+        public string FullFileName { get; private set; }
         public string FileName
         {
             get
@@ -102,10 +110,14 @@ namespace Launcher
             try
             {
                 FullFileName = fullName;
-                this.icon = Icon.ExtractAssociatedIcon(fullName).ToBitmap();
+                icon = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+                    Icon.ExtractAssociatedIcon(fullName).Handle,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions()
+                    ) ;
             }
             catch(Exception e)
-            { throw e; }
+            {  }
         }
     }
 }
