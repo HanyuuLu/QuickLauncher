@@ -34,11 +34,12 @@ namespace Launcher
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var task = Task.Run(() =>
-            {
-                Control.Instance.search();
-            }
-            );
+            //var task = Task.Run(() =>
+            //{
+            //    Control.Instance.search();
+            //}
+            //);
+            Control.Instance.search();
             SearchResultList.ItemsSource = Control.Instance.SearchList;
         }
 
@@ -68,13 +69,5 @@ namespace Launcher
         {
             Task.Run(() => Control.Instance.search());
         }
-        //public void updateList()
-        //{
-        //    if (ListBox == null)
-        //    {return;}
-        //    ListBox.Items.Clear();
-        //    foreach (var (key, value) in Control.Instance.SearchDict)
-        //    {ListBox.Items.Add(value);}
-        //}
     }
 }

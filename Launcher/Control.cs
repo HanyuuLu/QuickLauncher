@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -79,13 +80,15 @@ namespace Launcher
         {
             src = src ?? Name;
             src = src.TrimStart().TrimEnd();
-            if (true)
+            if (src!="")
             {
+                //await1 Task.Run(() => { 
                 IEnumerable<FileInfoItem> res =
                     from item in this.CompleteDict
                     where item.Value.Contains(src)
                     select new FileInfoItem(item.Key);
-                SearchList = res.ToList();
+                SearchList = res.Take(10).ToList();
+                //});
             }else
             {
                 SearchList.Clear();
@@ -116,7 +119,7 @@ namespace Launcher
                     BitmapSizeOptions.FromEmptyOptions()
                     ) ;
             }
-            catch(Exception e)
+            catch
             {  }
         }
     }
